@@ -1,0 +1,42 @@
+[INFO ] 2023-01-09T09:41:53,059 [main] ServerKt - Starting ServerKt on SGPM-C02X7GKPJG5J with PID 43311 (/Users/peter.li/Corda/corda4/samples-kotlin/Advanced/obligation-cordapp/clients/build/classes/kotlin/main started by peter.li in /Users/peter.li/Corda/corda4/samples-kotlin/Advanced/obligation-cordapp/clients)
+[INFO ] 2023-01-09T09:41:53,440 [main] ServerKt - No active profile set, falling back to default profiles: default
+[INFO ] 2023-01-09T09:41:53,866 [main] AnnotationConfigServletWebServerApplicationContext - Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@604b1e1d: startup date [Mon Jan 09 17:41:53 CST 2023]; root of context hierarchy
+[INFO ] 2023-01-09T09:42:04,002 [main] TomcatWebServer - Tomcat initialized with port(s): 10012 (http)
+[INFO ] 2023-01-09T09:42:04,188 [main] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-10012"]
+[INFO ] 2023-01-09T09:42:04,237 [main] StandardService - Starting service [Tomcat]
+[INFO ] 2023-01-09T09:42:04,239 [main] StandardEngine - Starting Servlet Engine: Apache Tomcat/8.5.31
+[INFO ] 2023-01-09T09:42:04,330 [localhost-startStop-1] AprLifecycleListener - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/Users/peter.li/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+[INFO ] 2023-01-09T09:42:05,815 [localhost-startStop-1] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 2023-01-09T09:42:05,816 [localhost-startStop-1] ContextLoader - Root WebApplicationContext: initialization completed in 11957 ms
+[INFO ] 2023-01-09T09:42:06,485 [localhost-startStop-1] ServletRegistrationBean - Servlet dispatcherServlet mapped to [/]
+[INFO ] 2023-01-09T09:42:06,590 [localhost-startStop-1] FilterRegistrationBean - Mapping filter: 'characterEncodingFilter' to: [/*]
+[INFO ] 2023-01-09T09:42:06,597 [localhost-startStop-1] FilterRegistrationBean - Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+[INFO ] 2023-01-09T09:42:06,601 [localhost-startStop-1] FilterRegistrationBean - Mapping filter: 'httpPutFormContentFilter' to: [/*]
+[INFO ] 2023-01-09T09:42:06,603 [localhost-startStop-1] FilterRegistrationBean - Mapping filter: 'requestContextFilter' to: [/*]
+[INFO ] 2023-01-09T09:42:38,938 [main] RPCClient - Startup took 16000 msec
+[INFO ] 2023-01-09T09:42:45,223 [main] SimpleUrlHandlerMapping - Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO ] 2023-01-09T09:42:45,978 [main] RequestMappingHandlerAdapter - Looking for @ControllerAdvice: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@604b1e1d: startup date [Mon Jan 09 17:41:53 CST 2023]; root of context hierarchy
+[INFO ] 2023-01-09T09:42:46,963 [main] RequestMappingHandlerMapping - Mapped "{[/api/iou/me],methods=[GET],produces=[application/json]}" onto public final java.util.Map<java.lang.String, java.lang.String> net.corda.samples.obligation.server.MainController.whoami()
+[INFO ] 2023-01-09T09:42:46,966 [main] RequestMappingHandlerMapping - Mapped "{[/api/iou/peers],methods=[GET],produces=[application/json]}" onto public final java.util.Map<java.lang.String, java.util.List<java.lang.String>> net.corda.samples.obligation.server.MainController.getPeers()
+[INFO ] 2023-01-09T09:42:46,968 [main] RequestMappingHandlerMapping - Mapped "{[/api/iou/ious],methods=[GET],produces=[application/json]}" onto public final java.util.List<net.corda.core.contracts.StateAndRef<net.corda.core.contracts.ContractState>> net.corda.samples.obligation.server.MainController.getIOUs()
+[INFO ] 2023-01-09T09:42:46,969 [main] RequestMappingHandlerMapping - Mapped "{[/api/iou/cash],methods=[GET],produces=[application/json]}" onto public final java.util.List<net.corda.core.contracts.StateAndRef<net.corda.core.contracts.ContractState>> net.corda.samples.obligation.server.MainController.getCash()
+[INFO ] 2023-01-09T09:42:46,971 [main] RequestMappingHandlerMapping - Mapped "{[/api/iou/issue-iou],methods=[PUT],produces=[text/plain]}" onto public final org.springframework.http.ResponseEntity<java.lang.String> net.corda.samples.obligation.server.MainController.issueIOU(int,java.lang.String,java.lang.String)
+[INFO ] 2023-01-09T09:42:46,973 [main] RequestMappingHandlerMapping - Mapped "{[/api/iou/cash-balances],methods=[GET],produces=[application/json]}" onto public final java.util.Map<java.util.Currency, net.corda.core.contracts.Amount<java.util.Currency>> net.corda.samples.obligation.server.MainController.getCashBalances()
+[INFO ] 2023-01-09T09:42:46,974 [main] RequestMappingHandlerMapping - Mapped "{[/api/iou/transfer-iou],methods=[GET],produces=[text/plain]}" onto public final org.springframework.http.ResponseEntity<java.lang.String> net.corda.samples.obligation.server.MainController.transferIOU(java.lang.String,java.lang.String)
+[INFO ] 2023-01-09T09:42:46,976 [main] RequestMappingHandlerMapping - Mapped "{[/api/iou/settle-iou],methods=[GET],produces=[text/plain]}" onto public final org.springframework.http.ResponseEntity<java.lang.String> net.corda.samples.obligation.server.MainController.settleIOU(java.lang.String,int,java.lang.String)
+[INFO ] 2023-01-09T09:42:46,978 [main] RequestMappingHandlerMapping - Mapped "{[/api/iou/self-issue-cash],methods=[GET],produces=[text/plain]}" onto public final org.springframework.http.ResponseEntity<java.lang.String> net.corda.samples.obligation.server.MainController.selfIssueCash(int,java.lang.String)
+[INFO ] 2023-01-09T09:42:46,985 [main] RequestMappingHandlerMapping - Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+[INFO ] 2023-01-09T09:42:46,987 [main] RequestMappingHandlerMapping - Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+[INFO ] 2023-01-09T09:42:47,181 [main] SimpleUrlHandlerMapping - Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO ] 2023-01-09T09:42:47,182 [main] SimpleUrlHandlerMapping - Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO ] 2023-01-09T09:42:47,461 [main] WelcomePageHandlerMapping - Adding welcome page: class path resource [public/index.html]
+[INFO ] 2023-01-09T09:42:48,225 [main] AnnotationMBeanExporter - Registering beans for JMX exposure on startup
+[INFO ] 2023-01-09T09:42:48,275 [main] Http11NioProtocol - Starting ProtocolHandler ["http-nio-10012"]
+[INFO ] 2023-01-09T09:42:48,322 [main] NioSelectorPool - Using a shared selector for servlet write/read
+[INFO ] 2023-01-09T09:42:48,417 [main] TomcatWebServer - Tomcat started on port(s): 10012 (http) with context path ''
+[INFO ] 2023-01-09T09:42:48,433 [main] ServerKt - Started ServerKt in 61.451 seconds (JVM running for 68.12)
+[INFO ] 2023-01-09T09:42:58,441 [http-nio-10012-exec-1] [/] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+[INFO ] 2023-01-09T09:42:58,442 [http-nio-10012-exec-1] DispatcherServlet - FrameworkServlet 'dispatcherServlet': initialization started
+[INFO ] 2023-01-09T09:42:58,531 [http-nio-10012-exec-1] DispatcherServlet - FrameworkServlet 'dispatcherServlet': initialization completed in 88 ms
+[WARN ] 2023-01-09T09:54:17,843 [Thread-3 (ActiveMQ-client-factory-threads-1061543916)] client - AMQ212037: Connection failure to localhost/127.0.0.1:10011 has been detected: AMQ219015: The connection was disconnected because of server shutdown [code=DISCONNECTED]
+[WARN ] 2023-01-09T09:54:17,884 [Thread-3 (ActiveMQ-client-factory-threads-1061543916)] RPCClientProxyHandler - Terminating observables.
