@@ -64,6 +64,7 @@ class ViewIOUByAccount(
     override fun call(): String {
 
         val myAccount = accountService.accountInfo(acctname).single().state.data
+        val name =myAccount.name
         val criteria = QueryCriteria.VaultQueryCriteria(
             externalIds = listOf(myAccount.identifier.id)
         )
@@ -75,7 +76,7 @@ class ViewIOUByAccount(
 
             "\n" + "iou: " + it.state.data.amount + " | borrowed from acct: " + lenderAccount.name +"(Node: "+ lenderAccount.host.name.organisation+") | Paid : " + it.state.data.paid
         }
-        return "\nEach iou is: $ious"
+        return "\n$name has iou is: $ious"
     }
 
 }
@@ -86,7 +87,8 @@ class ViewIOUByAccount(
 //flow start ViewCashBalanceByAccount acctname: bob6424
 
 //flow start ViewAccounts
-//flow start IOUIssueFlow meID: 07649a16-5d9f-489b-bab0-1cb7ccc14e2c, lenderID: 027df016-fc4b-4774-9c58-183032918370, amount: 20
-//flow start IOUSettleFlow linearId: b2b1e847-894f-4bb4-8ebf-0bc801369107, meID: ecf03df3-04d7-46a5-bc1c-e464cdbecd92, amount: [20 USD]
+//flow start IOUIssueFlow meID: 36ea16ec-a089-49a3-8e85-3cd90809ae27, lenderID: 34990634-1b8f-4fe1-aebe-a315a81d0b71, amount: 20
+//flow start IOUSettleFlow linearId: e3378fc7-7fbb-4477-9d73-3c44f2577c8c, meID: 36ea16ec-a089-49a3-8e85-3cd90809ae27, settleAmount: 5
+//flow start IOUTransferFlow linearId: e3378fc7-7fbb-4477-9d73-3c44f2577c8c, meID: 34990634-1b8f-4fe1-aebe-a315a81d0b71, newLenderID: afc9f98f-ef58-402d-9d3d-c4774191e661
 
 //flow start IOUTransferFlow linearId: d4487a5b-45ee-4804-9350-55f1286d8f79, meID: 027df016-fc4b-4774-9c58-183032918370, newLenderID: 171f706a-97f6-4566-9aa4-f6be2940de1a

@@ -33,5 +33,5 @@ class CreateNewAccountAndShare(
 }
 
 //flow start CreateNewAccountAndShare acctName: bob6424, node2: ParticipantB, node3: ParticipantC
-//flow start CreateNewAccountAndShare acctName: Nancy3426, node2: ParticipantA, node3: ParticipantC
+//flow start CreateNewAccountAndShare acctName: Julie7465, node2: ParticipantA, node3: ParticipantC
 //flow start CreateNewAccountAndShare acctName: Peter7548, node2: ParticipantB, node3: ParticipantA

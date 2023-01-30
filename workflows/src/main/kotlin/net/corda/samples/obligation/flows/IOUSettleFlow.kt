@@ -106,8 +106,8 @@ class IOUSettleFlow(
 
 
         val sessionTolender = initiateFlow(targetAccount.host)
-        // Sending other party our identities so they are aware of anonymous public keys
-        subFlow(IdentitySyncFlow.Send(sessionTolender, ptx.tx))
+//        // Sending other party our identities, so they are aware of anonymous public keys
+//        subFlow(IdentitySyncFlow.Send(sessionTolender, ptx.tx))
 
         val accountToMoveToSignature = subFlow(CollectSignatureFlow(ptx, sessionTolender, counterparty.owningKey))
         val signedByCounterParty = ptx.withAdditionalSignatures(accountToMoveToSignature)
@@ -127,8 +127,8 @@ class IOUSettleFlowResponder(val flowSession: FlowSession): FlowLogic<SignedTran
     @Suspendable
     override fun call(): SignedTransaction {
 
-        // Receiving information about anonymous identities
-        subFlow(IdentitySyncFlow.Receive(flowSession))
+//        // Receiving information about anonymous identities
+//        subFlow(IdentitySyncFlow.Receive(flowSession))
 
         // signing transaction
         val signedTransactionFlow = object : SignTransactionFlow(flowSession) {

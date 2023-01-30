@@ -37,6 +37,7 @@ class IOUIssueFlow(
 
         val borrowerAccount = accountService.accountInfo(meID)!!.state.data
         val borrowerKey = subFlow(RequestKeyForAccount(borrowerAccount)).owningKey
+
         val lenderAccount = accountService.accountInfo(lenderID)!!.state.data
         val lenderAccountParty = subFlow(RequestKeyForAccount(lenderAccount))
 
@@ -45,7 +46,7 @@ class IOUIssueFlow(
         //might change
         val amount = Amount(amount.toLong() * 100, Currency.getInstance("USD"))
 
-        val state = IOUState(amount, AnonymousParty(borrowerKey),lenderAccountParty,lenderID,ourIdentity)
+        val state = IOUState(amount,lenderAccountParty,AnonymousParty(borrowerKey),lenderID,ourIdentity)
 
         val builder = TransactionBuilder(notary = notary)
             .addOutputState(state, IOUContract.IOU_CONTRACT_ID)

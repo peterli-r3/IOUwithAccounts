@@ -4,12 +4,14 @@ package net.corda.samples.obligation.flows
 import co.paralleluniverse.fibers.Suspendable
 import com.r3.corda.lib.accounts.workflows.accountService
 import com.r3.corda.lib.accounts.workflows.flows.RequestKeyForAccount
-import com.r3.corda.lib.accounts.workflows.internal.flows.createKeyForAccount
+import com.r3.corda.lib.ci.workflows.SyncKeyMappingFlow
+import com.r3.corda.lib.ci.workflows.SyncKeyMappingFlowHandler
 import net.corda.core.contracts.Command
 import net.corda.core.contracts.StateAndContract
 import net.corda.core.contracts.UniqueIdentifier
 import net.corda.core.contracts.requireThat
 import net.corda.core.flows.*
+import net.corda.core.identity.AbstractParty
 import net.corda.core.node.services.queryBy
 import net.corda.core.node.services.vault.QueryCriteria
 import net.corda.core.transactions.SignedTransaction
@@ -53,10 +55,13 @@ class IOUTransferFlow(val linearId: UniqueIdentifier,
         val newLenderAccount = accountService.accountInfo(newLenderID)!!.state.data
         val newLenderAcctAnonymousParty = subFlow(RequestKeyForAccount(newLenderAccount))
 
+        //sync keys
+//        SyncKey(inputIou.borrowerHost,listOf(borrowerAcctAnonymousParty,oldLenderAcctPartyAndCert,newLenderAcctAnonymousParty))
+//        SyncKey(newLenderAccount.host,listOf(borrowerAcctAnonymousParty,oldLenderAcctPartyAndCert,newLenderAcctAnonymousParty))
 
         // Build IOU output state, update participants list
         val outputIou = inputIou.withNewLender(newLenderAcctAnonymousParty, newLenderID)
-
+        subFlow(SyncIOU(outputIou.linearId, inputIou.borrowerHost))
         //add signers and build command
         val signers =  listOf(
             borrowerAcctAnonymousParty.owningKey,
@@ -76,23 +81,23 @@ class IOUTransferFlow(val linearId: UniqueIdentifier,
         builder.verify(serviceHub)
 
         //self sign with original lender's newly generated key
-        val locallySignedTx = serviceHub.signInitialTransaction(builder,listOf(oldLenderAcctPartyAndCert.owningKey))
+        val locallySignedTx = serviceHub.signInitialTransaction(builder,listOf(ourIdentity.owningKey,oldLenderAcctPartyAndCert.owningKey))
 
-//        val sessions = listOf(newLenderAccount.host, inputIou.borrowerHost).map {initiateFlow(it)}.toSet()
-//        val signedByALLParty = subFlow(CollectSignaturesFlow(locallySignedTx,sessions, listOf(borrowerAcctAnonymousParty.owningKey,newLenderAcctAnonymousParty.owningKey)))
-//        return subFlow(FinalityFlow(signedByALLParty, sessions))
+        val sessions = listOf(newLenderAccount.host, inputIou.borrowerHost).map {initiateFlow(it)}.toSet()
+        val signedByALLParty = subFlow(CollectSignaturesFlow(locallySignedTx,sessions))
+        return subFlow(FinalityFlow(signedByALLParty, sessions))
 
-
-        //session goes to the new lender acct's parent node
-        val newLenderSession = initiateFlow(newLenderAccount.host)
-        val accountToMoveToSignature = subFlow(CollectSignatureFlow(locallySignedTx, newLenderSession, newLenderAcctAnonymousParty.owningKey))
-        val signedByNewLender = locallySignedTx.withAdditionalSignatures(accountToMoveToSignature)
-
-        //session goes to the borrower acct's parent node
-        val borrowerSession = initiateFlow(inputIou.borrowerHost)
-        val borrowerSignature = subFlow(CollectSignatureFlow(locallySignedTx, borrowerSession, borrowerAcctAnonymousParty.owningKey))
-        val signedByALLParty = signedByNewLender.withAdditionalSignatures(borrowerSignature)
-        return subFlow(FinalityFlow(signedByALLParty, listOf(newLenderSession,borrowerSession)))
+        /* The following code is to show how to collect signature manually one party at the time. */
+//        //session goes to the new lender acct's parent node
+//        val newLenderSession = initiateFlow(newLenderAccount.host)
+//        val lenderSignature = subFlow(CollectSignatureFlow(locallySignedTx, newLenderSession, newLenderAcctAnonymousParty.owningKey))
+//        val signedByNewLender = locallySignedTx.withAdditionalSignatures(lenderSignature)
+//
+//        //session goes to the borrower acct's parent node
+//        val borrowerSession = initiateFlow(inputIou.borrowerHost)
+//        val borrowerSignature = subFlow(CollectSignatureFlow(signedByNewLender, borrowerSession, borrowerAcctAnonymousParty.owningKey))
+//        val signedByALLParty = signedByNewLender.withAdditionalSignatures(borrowerSignature)
+//        return subFlow(FinalityFlow(signedByALLParty, listOf(newLenderSession,borrowerSession)))
     }
 }
 
