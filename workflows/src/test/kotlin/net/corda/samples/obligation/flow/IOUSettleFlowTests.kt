@@ -31,9 +31,6 @@ class IOUSettleFlowTests {
 
     @Before
     fun setup() {
-//        mockNetwork = MockNetwork(listOf("net.corda.samples.obligation", "net.corda.finance.contracts.asset", CashSchemaV1::class.packageName),
-//                notarySpecs = listOf(MockNetworkNotarySpec(CordaX500Name("Notary","London","GB"))))
-
         mockNetwork = MockNetwork(
             MockNetworkParameters(cordappsForAllNodes = listOf(
                 TestCordapp.findCordapp("net.corda.samples.obligation.flows"),
@@ -61,15 +58,6 @@ class IOUSettleFlowTests {
         mockNetwork.stopNodes()
     }
 
-//    /**
-//     * Issue an IOU on the ledger, we need to do this before we can transfer one.
-//     */
-//    private fun issueIou(meID: UUID,lenderID: UUID,amount: Int): SignedTransaction {
-//        val flow = IOUIssueFlow(meID,lenderID,amount)
-//        val future = a.startFlow(flow)
-//        mockNetwork.runNetwork()
-//        return future.getOrThrow()
-//    }
 
     private fun moneyDrop(acctID: UUID): SignedTransaction{
         val flow = MoneyDropFlow(acctID)
@@ -191,14 +179,19 @@ class IOUSettleFlowTests {
         val transferIOU = IOUTransferFlow(UniqueIdentifier.fromString(iouID),UUID.fromString(lenderID), UUID.fromString(newlenderID))
         val future8 = b.startFlow(transferIOU)
         mockNetwork.runNetwork()
-        println("-------------")
         println(future8.getOrThrow())
-        println("-------------")
 
         val checkIOU2 = ViewIOUByAccount("bob6424")
         val future9 = a.startFlow(checkIOU2)
         mockNetwork.runNetwork()
         println(future9.getOrThrow())
+
+
+        val syncIOU = SyncIOU(UniqueIdentifier.fromString(iouID),ax500)
+        val future11 = c.startFlow(syncIOU)
+        mockNetwork.runNetwork()
+        println(future11.getOrThrow())
+        println("-------------------------------------")
 
         //Money drop twice
         moneyDrop(UUID.fromString(meID))

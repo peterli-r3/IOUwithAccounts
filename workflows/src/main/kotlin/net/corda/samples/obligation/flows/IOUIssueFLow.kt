@@ -4,8 +4,6 @@ package net.corda.samples.obligation.flows
 import co.paralleluniverse.fibers.Suspendable
 import com.r3.corda.lib.accounts.workflows.accountService
 import com.r3.corda.lib.accounts.workflows.flows.RequestKeyForAccount
-import com.r3.corda.lib.accounts.workflows.flows.ShareStateAndSyncAccounts
-import com.r3.corda.lib.accounts.workflows.flows.ShareStateAndSyncAccountsFlow
 import net.corda.core.contracts.Amount
 import net.corda.core.contracts.Command
 import net.corda.samples.obligation.states.IOUState
@@ -15,7 +13,6 @@ import net.corda.core.identity.AnonymousParty
 import net.corda.core.identity.CordaX500Name
 import net.corda.core.transactions.SignedTransaction
 import net.corda.core.transactions.TransactionBuilder
-import net.corda.samples.obligation.accountUtil.NewKeyForAccount
 import net.corda.samples.obligation.contract.IOUContract
 import java.util.*
 

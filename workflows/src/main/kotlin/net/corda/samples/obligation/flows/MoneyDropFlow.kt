@@ -38,4 +38,3 @@ class MoneyDropFlow(val acctID: UUID) : FlowLogic<SignedTransaction>() {
     }
 }
 
-//flow start MoneyDropFlow acctID: 918f51c2-84ca-4c8a-be2a-bf9c88a6b78c

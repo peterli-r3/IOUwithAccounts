@@ -4,17 +4,14 @@ import co.paralleluniverse.fibers.Suspendable
 import com.r3.corda.lib.accounts.workflows.accountService
 import com.r3.corda.lib.accounts.workflows.flows.RequestKeyForAccount
 import net.corda.samples.obligation.states.IOUState
-import net.corda.confidential.IdentitySyncFlow
 import net.corda.core.contracts.*
 import net.corda.core.flows.*
-import net.corda.core.node.services.queryBy
 import net.corda.core.node.services.vault.QueryCriteria
 import net.corda.core.transactions.SignedTransaction
 import net.corda.core.transactions.TransactionBuilder
 import net.corda.finance.contracts.asset.Cash
 
 import net.corda.finance.workflows.asset.CashUtils
-import net.corda.finance.workflows.getCashBalance
 import net.corda.samples.obligation.accountUtil.NewKeyForAccount
 import net.corda.samples.obligation.contract.IOUContract
 import java.util.*
@@ -106,9 +103,6 @@ class IOUSettleFlow(
 
 
         val sessionTolender = initiateFlow(targetAccount.host)
-//        // Sending other party our identities, so they are aware of anonymous public keys
-//        subFlow(IdentitySyncFlow.Send(sessionTolender, ptx.tx))
-
         val accountToMoveToSignature = subFlow(CollectSignatureFlow(ptx, sessionTolender, counterparty.owningKey))
         val signedByCounterParty = ptx.withAdditionalSignatures(accountToMoveToSignature)
 
@@ -126,9 +120,6 @@ class IOUSettleFlow(
 class IOUSettleFlowResponder(val flowSession: FlowSession): FlowLogic<SignedTransaction>() {
     @Suspendable
     override fun call(): SignedTransaction {
-
-//        // Receiving information about anonymous identities
-//        subFlow(IdentitySyncFlow.Receive(flowSession))
 
         // signing transaction
         val signedTransactionFlow = object : SignTransactionFlow(flowSession) {

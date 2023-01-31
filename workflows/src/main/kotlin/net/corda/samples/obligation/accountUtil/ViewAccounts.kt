@@ -74,21 +74,23 @@ class ViewIOUByAccount(
         ).states.map {
             val lenderAccount = accountService.accountInfo(it.state.data.lenderAcctID)!!.state.data
 
-            "\n" + "iou: " + it.state.data.amount + " | borrowed from acct: " + lenderAccount.name +"(Node: "+ lenderAccount.host.name.organisation+") | Paid : " + it.state.data.paid
+            "\n" + name + " borrowed "+ it.state.data.amount +" from acct: " + lenderAccount.name +"(Node: "+ lenderAccount.host.name.organisation+") | Paid : " + it.state.data.paid
         }
         return "\n$name has iou is: $ious"
     }
 
 }
 
+//flow start ViewAccounts
+//flow start IOUIssueFlow meID: 24e45cb4-4473-4420-8064-ad5128ccef53, lenderID: cb1e1f55-3c8a-48bb-aee6-6ceed8605cb2, amount: 20
+
+//flow start MoneyDropFlow acctID: 24e45cb4-4473-4420-8064-ad5128ccef53
 //flow start ViewIOUByAccount acctname: bob6424
-
-
 //flow start ViewCashBalanceByAccount acctname: bob6424
 
-//flow start ViewAccounts
-//flow start IOUIssueFlow meID: 36ea16ec-a089-49a3-8e85-3cd90809ae27, lenderID: 34990634-1b8f-4fe1-aebe-a315a81d0b71, amount: 20
-//flow start IOUSettleFlow linearId: e3378fc7-7fbb-4477-9d73-3c44f2577c8c, meID: 36ea16ec-a089-49a3-8e85-3cd90809ae27, settleAmount: 5
-//flow start IOUTransferFlow linearId: e3378fc7-7fbb-4477-9d73-3c44f2577c8c, meID: 34990634-1b8f-4fe1-aebe-a315a81d0b71, newLenderID: afc9f98f-ef58-402d-9d3d-c4774191e661
 
-//flow start IOUTransferFlow linearId: d4487a5b-45ee-4804-9350-55f1286d8f79, meID: 027df016-fc4b-4774-9c58-183032918370, newLenderID: 171f706a-97f6-4566-9aa4-f6be2940de1a
+//flow start IOUSettleFlow linearId: 53c4cc93-5c0d-403f-9cf4-7770583de61b, meID: 24e45cb4-4473-4420-8064-ad5128ccef53, settleAmount: 5
+//flow start IOUTransferFlow linearId: 53c4cc93-5c0d-403f-9cf4-7770583de61b, meID: cb1e1f55-3c8a-48bb-aee6-6ceed8605cb2, newLenderID: 582aa5d9-fcc6-4cb1-94b7-95c525f45a3c
+
+//flow start SyncIOU linearId: 53c4cc93-5c0d-403f-9cf4-7770583de61b, party: ParticipantA
+//flow start IOUSettleFlow linearId: 53c4cc93-5c0d-403f-9cf4-7770583de61b, meID: 24e45cb4-4473-4420-8064-ad5128ccef53, settleAmount: 5

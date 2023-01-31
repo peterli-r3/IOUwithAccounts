@@ -1,20 +1,14 @@
 package net.corda.samples.obligation.flow
 
-import net.corda.samples.obligation.states.IOUState
 import net.corda.core.contracts.*
 import net.corda.core.identity.CordaX500Name
-import net.corda.core.identity.Party
 import net.corda.core.internal.packageName
 import net.corda.core.transactions.SignedTransaction
 import net.corda.core.utilities.getOrThrow
-import net.corda.finance.*
 import net.corda.finance.schemas.CashSchemaV1
 import net.corda.samples.obligation.accountUtil.CreateNewAccountAndShare
 import net.corda.samples.obligation.accountUtil.ViewAccounts
-import net.corda.samples.obligation.accountUtil.ViewCashBalanceByAccount
 import net.corda.samples.obligation.accountUtil.ViewIOUByAccount
-import net.corda.testing.internal.chooseIdentityAndCert
-import net.corda.samples.obligation.contract.IOUContract
 import net.corda.samples.obligation.flows.*
 import net.corda.testing.common.internal.testNetworkParameters
 import net.corda.testing.node.*
@@ -24,7 +18,6 @@ import org.junit.Test
 import java.util.*
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Future
-import kotlin.test.assertFailsWith
 
 /**
  * Practical exercise instructions Flows part 2.

@@ -4,6 +4,7 @@ package net.corda.samples.obligation.flows
 import co.paralleluniverse.fibers.Suspendable
 import com.r3.corda.lib.accounts.workflows.accountService
 import com.r3.corda.lib.accounts.workflows.flows.RequestKeyForAccount
+import com.r3.corda.lib.accounts.workflows.flows.ShareAccountInfoFlow
 import com.r3.corda.lib.ci.workflows.SyncKeyMappingFlow
 import com.r3.corda.lib.ci.workflows.SyncKeyMappingFlowHandler
 import net.corda.core.contracts.Command
@@ -55,13 +56,9 @@ class IOUTransferFlow(val linearId: UniqueIdentifier,
         val newLenderAccount = accountService.accountInfo(newLenderID)!!.state.data
         val newLenderAcctAnonymousParty = subFlow(RequestKeyForAccount(newLenderAccount))
 
-        //sync keys
-//        SyncKey(inputIou.borrowerHost,listOf(borrowerAcctAnonymousParty,oldLenderAcctPartyAndCert,newLenderAcctAnonymousParty))
-//        SyncKey(newLenderAccount.host,listOf(borrowerAcctAnonymousParty,oldLenderAcctPartyAndCert,newLenderAcctAnonymousParty))
-
         // Build IOU output state, update participants list
         val outputIou = inputIou.withNewLender(newLenderAcctAnonymousParty, newLenderID)
-        subFlow(SyncIOU(outputIou.linearId, inputIou.borrowerHost))
+
         //add signers and build command
         val signers =  listOf(
             borrowerAcctAnonymousParty.owningKey,
